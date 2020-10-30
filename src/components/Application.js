@@ -8,8 +8,6 @@ import "./Application.scss";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
 export default function Application(props) {
-  // const [day, setDay] = useState('Monday');
-  // const [days, setDays] = useState([]);
 
   const [state, setState] = useState({
     day: "Monday",
@@ -22,6 +20,40 @@ export default function Application(props) {
 
   const setDay = day => setState(prev => ({ ...prev, day }));
 
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    console.log(appointment);
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    console.log(appointments);
+    return axios.put(`/api/appointments/${id}`, appointment)
+            .then(() => setState({...state, appointments}))
+
+  }
+
+  function cancelInterview(id) {
+    console.log('cancelInterview', id);
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    console.log(appointment);
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    console.log(appointments);
+    return axios.delete(`/api/appointments/${id}`, appointment)
+    .then(() => setState({...state, appointments}))
+    // .catch(error => console.log(error))
+  }
+
+
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
@@ -30,7 +62,7 @@ export default function Application(props) {
     ]).then((all) => {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     });
-  })
+  },[])
 
   return (
     <main className="layout">
@@ -45,7 +77,6 @@ export default function Application(props) {
           <DayList
             days={state.days}
             day={state.day}
-            // setDay={setDay}
             setDay={setDay}
           />
         </nav>
@@ -67,6 +98,8 @@ export default function Application(props) {
                   time={appointment.time}
                   interview={getInterview(state, appointment.interview)}
                   interviewers={getInterviewersForDay(state, state.day)}
+                  bookInterview={bookInterview}
+                  cancelInterview={cancelInterview}
              />
           )
         })}
