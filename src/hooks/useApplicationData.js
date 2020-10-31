@@ -55,16 +55,11 @@ export default function useAppliationData() {
   // change spots remaining upon change in state
   
   function updateDays (appointmentId, change) {
-    const newDays = state.days.map(day => {
-      if (day.appointments.includes(appointmentId)) {
-        return {...day, spots: day.spots + change};
-      }
-      else { 
-        return day;
-      }
-      })
-
+    const newDays = state.days.map(day => 
+      day.appointments.includes(appointmentId) ? {...day, spots: day.spots + change} : day
+    );
       return newDays;
+      
   }
 
   // function to send book interview data to server
