@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
-
-  console.log('mode: ', mode)
-  console.log('history: ', history);
 
   function back() {
     if (history.length > 1) {
