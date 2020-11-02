@@ -10,10 +10,10 @@ export default function useAppliationData() {
 
   function reducer(state, action) {
     const actions = {
-      SET_DAY: {...state, day: action.value},
-      SET_APPLICATION_DATA: action.value,
-      SET_INTERVIEW: {...state, appointments: action.value},
-      SET_DAYS: {...state, days: action.value}
+      [SET_DAY]: {...state, day: action.value},
+      [SET_APPLICATION_DATA]: action.value,
+      [SET_INTERVIEW]: {...state, appointments: action.value},
+      [SET_DAYS]: {...state, days: action.value}
     };
 
     if (action.type in actions) {
@@ -58,8 +58,7 @@ export default function useAppliationData() {
     const newDays = state.days.map(day => 
       day.appointments.includes(appointmentId) ? {...day, spots: day.spots + change} : day
     );
-      return newDays;
-      
+      return newDays;      
   }
 
   // function to send book interview data to server
