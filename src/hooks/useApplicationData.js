@@ -49,13 +49,13 @@ export default function useAppliationData() {
               }})})
   }, [])
 
-  useEffect(() => setDays()
-  ,[state.appointments])
+  // change spots in days state when appointments change
+  useEffect(() => setDays(),[state.appointments])
 
   // function to change selected day
   const setDay = day => dispatch({type: SET_DAY, value: day});
 
-  // change spots remaining upon change in state
+  // function to calculate remaining spots and create new days state
   function setDays () {
     // console.log('updateDays - appointments',state.appointments);
     const newDays = [];
