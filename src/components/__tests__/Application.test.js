@@ -115,6 +115,9 @@ describe("Application test", () => {
 
   it("shows the save error when failing to save an appointment", async () => {
 
+    // 0. Mock put rejection
+    axios.put.mockRejectedValueOnce();
+
     // 1. Render the Application.
     const { container } = render(<Application />);
 
@@ -136,14 +139,15 @@ describe("Application test", () => {
 
     // 7. Check that the element with the text "Saving" is displayed.
     expect(getByText(appointment, "Saving...")).toBeInTheDocument();
-    
-    // 8. Check that axios put call is rejected once.
-    axios.put.mockRejectedValueOnce();
-    
+  
+    // 8. Wait for the Error component to be displayed.
+    await waitForElement(() => getByText(appointment, "Error"));
   });
 
 
   it("shows the delete error when failing to delete an appointment", async () => {
+    // 0. Returns a mock put rejection
+    axios.delete.mockRejectedValueOnce();
 
     // 1. Render the Application.
     const { container } = render(<Application />);
@@ -164,9 +168,8 @@ describe("Application test", () => {
     // 6. Check that the element with "Deleting..." is displayed.
     expect(getByText(appointment, "Deleting..."));
       
-    // 7. Check that axios put call is rejected once.
-    axios.put.mockRejectedValueOnce();
-      
+    // 7. Wait for the Error component to be displayed.
+    await waitForElement(() => getByText(appointment, "Error"));
   });
 
 });
