@@ -47,19 +47,28 @@ export default function useAppliationData() {
                 appointments: all[1].data, 
                 interviewers: all[2].data
               }})})
-  },[])
+  }, [])
+
+  useEffect(() => setDays()
+  ,[state.appointments])
 
   // function to change selected day
   const setDay = day => dispatch({type: SET_DAY, value: day});
 
   // change spots remaining upon change in state
-  
-  function updateDays (appointmentId, change) {
-    const newDays = state.days.map(day => 
-      day.appointments.includes(appointmentId) ? {...day, spots: day.spots + change} : day
-    );
-      return newDays;      
-  }
+  function setDays () {
+    // console.log('updateDays - appointments',state.appointments);
+    const newDays = [];
+    for (const day of state.days) {
+        const spots = day.appointments.reduce((acc, appointmentId) => {
+        let spot = (state.appointments[appointmentId].interview === null) ? 1 : 0;
+        return acc + spot;
+      }, 0)
+      newDays.push({...day, spots});
+    }
+    dispatch({type: SET_DAYS, value: newDays})
+  }    
+
 
   // function to send book interview data to server
   function bookInterview(id, interview) {
@@ -72,11 +81,7 @@ export default function useAppliationData() {
       [id]: appointment
     };
     return axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {
-        const days = updateDays(id, -1);
-        dispatch({type: SET_INTERVIEW, value: appointments});
-        dispatch({type: SET_DAYS, value: days});
-      });
+      .then((data) => dispatch({type: SET_INTERVIEW, value: appointments}))        
   }
   // function to send cancel interview data to server
   function cancelInterview(id) {
@@ -90,11 +95,7 @@ export default function useAppliationData() {
     };
 
     return axios.delete(`/api/appointments/${id}`, appointment)
-      .then(() => {
-        const days = updateDays(id, 1);
-        dispatch({type: SET_INTERVIEW, value: appointments});
-        dispatch({type: SET_DAYS, value: days});
-      }) 
+      .then((data) => dispatch({type: SET_INTERVIEW, value: appointments}))
   }
 
   return { state, setDay, bookInterview, cancelInterview };

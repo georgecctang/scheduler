@@ -68,30 +68,20 @@ export default {
       statusText: "OK",
       data: dataObject[url]    
     });
+  }),
+
+  put: jest.fn((url, appointment) => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "OK"
+    })
+  }),
+
+  delete: jest.fn((url, appointment) => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "OK"
+    })
   })
-}
 
-// if (url === "/api/days") {
-//   return Promise.resolve({
-//     status: 200,
-//     statusText: "OK",
-//     data: fixtures.days
-//   });
-// }
-
-// if (url === "/api/appointments") {
-//   /* Resolve appointments data */
-//   return Promise.resolve({
-//     status: 200,
-//     statusText: "OK",
-//     data: fixtures.appointments
-//   });
-// }
-
-// if (url === "/api/interviewers") {
-//   /* Resolve interviewers data */
-//   return Promise.resolve({
-//     status: 200,
-//     statusText: "OK",
-//     data: fixtures.interviewers
-//   });
+};
