@@ -4,11 +4,13 @@ import Button from '../Button';
 
 export default function Form(props) {
 
+  // For Create, props.name = "" and props.interviewer = null;
+  // For Edit, props.name and props.interviewer will not be empty
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
-  // let interviewer = props.interviewer ? props.interviewer : undefined
 
+  // function to clear name input and de-select interviewer
   function reset() {
     setName("");
     setInterviewer(null);
@@ -26,11 +28,6 @@ export default function Form(props) {
     }
 
     setError("");
-
-    // if (!interviewer) {
-    //   setError("Please select an interviewer");
-    //   return;
-    // }
   
     props.onSave(name, interviewer ? interviewer.id : null);
   }
@@ -53,7 +50,7 @@ export default function Form(props) {
           />
         </form>
         <section className="appointment__validation">{error}</section>
-        <InterviewerList 
+        <InterviewerList
           interviewers={props.interviewers}
           value={interviewer ? interviewer.id : null}
           onChange={setInterviewer} />

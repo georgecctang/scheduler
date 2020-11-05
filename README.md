@@ -1,23 +1,32 @@
 # Interview Scheduler
 
-## Setup
+This schedule app allows users to store, create, edit and delete interview appointments. It uses HTML5, CSS3, React, Express, PosgreSQL, and Node. 
 
-Install dependencies with `npm install`.
+## Final Product
 
-## Running Webpack Development Server
+Click on the Days panel to choose the day of week.
+!['Choose a day'](./docs/choose-day.png)
 
-```sh
-npm start
-```
+Enter the students name and select an interviewer.
+!['Input student name and choose interviewer'](./docs/create-form.png)
 
-## Running Jest Test Framework
 
-```sh
-npm test
-```
+The newly created appointment will be displayed and stored to the backend.
+!['Input student name and choose interviewer'](./docs/save-form.png)
 
-## Running Storybook Visual Testbed
 
-```sh
-npm run storybook
-```
+
+## Getting Started
+1. Create a backend for the project. Following the instructions listed in [scheduler-api](https://github.com/lighthouse-labs/scheduler-api).
+2. Install all dependencies for this app (using the npm install command).
+3. Run command: npm start
+
+## Dependencies
+
+- axios
+- classnames
+- normalize.css
+- react
+- react-dom
+- react-hooks-testing-library
+- react-scripts

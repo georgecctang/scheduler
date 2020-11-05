@@ -17,9 +17,9 @@ export default function Application(props) {
     <main className="layout">
       <section className="sidebar">
         <img
-        className="sidebar--centered"
-        src="images/logo.png"
-        alt="Interview Scheduler"
+          className="sidebar--centered"
+          src="images/logo.png"
+          alt="Interview Scheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
@@ -41,16 +41,16 @@ export default function Application(props) {
 
           
           return (
-            <Appointment 
-                  key={appointment.id} 
-                  id={appointment.id}
-                  time={appointment.time}
-                  interview={getInterview(state, appointment.interview)}
-                  interviewers={getInterviewersForDay(state, state.day)}
-                  bookInterview={bookInterview}
-                  cancelInterview={cancelInterview}
-             />
-          )
+            <Appointment
+              key={appointment.id}
+              id={appointment.id}
+              time={appointment.time}
+              interview={getInterview(state, appointment.interview)}
+              interviewers={getInterviewersForDay(state, state.day)}
+              bookInterview={bookInterview}
+              cancelInterview={cancelInterview}
+            />
+          );
         })}
         <Appointment key="last" time="5pm" />
 
